@@ -1,42 +1,57 @@
-// Conexión al servidor WebSocket en Render
-const socket = new WebSocket("wss://omega-x-3.onrender.com");
+import express from "express";
+import { createServer } from "http";
+import { WebSocketServer } from "ws";
 
-// Elementos de la página
-const statusText = document.getElementById("status");
-const chatBox = document.getElementById("chatBox");
-const messageInput = document.getElementById("message");
-const sendBtn = document.getElementById("sendBtn");
+const app = express();
+const server = createServer(app);
+const PORT = process.env.PORT || 3000;
 
-// Cuando se conecta
-socket.onopen = () => {
-  statusText.textContent = "Conectando...";
-};
+app.get("/", (req, res) => {
+  res.send("Servidor WebSocket funcionando correctamente.");
+});
 
-// Cuando llega un mensaje del servidor
-socket.onmessage = (event) => {
-  const data = JSON.parse(event.data);
+const wss = new WebSocketServer({ server });
 
-  if (data.type === "status") {
-    statusText.textContent = data.message;
+let waitingUser = null;
+
+wss.on("connection", (ws) => {
+  ws.partner = null;
+
+  if (waitingUser === null) {
+    waitingUser = ws;
+    ws.send(JSON.stringify({ type: "status", message: "Esperando a otro usuario..." }));
+  } else {
+    ws.partner = waitingUser;
+    waitingUser.partner = ws;
+
+    ws.send(JSON.stringify({ type: "status", message: "¡Conectado con un extraño!" }));
+    waitingUser.send(JSON.stringify({ type: "status", message: "¡Conectado con un extraño!" }));
+
+    waitingUser = null;
   }
 
-  if (data.type === "message") {
-    const p = document.createElement("p");
-    p.textContent = "Extraño: " + data.message;
-    chatBox.appendChild(p);
-  }
-};
+  ws.on("message", (msg) => {
+    if (ws.partner) {
+      ws.partner.send(JSON.stringify({ type: "message", message: msg.toString() }));
+    }
+  });
 
-// Botón para enviar mensajes
-sendBtn.onclick = () => {
-  const msg = messageInput.value;
-  if (msg.trim() === "") return;
+  ws.on("close", () => {
+    if (waitingUser === ws) waitingUser = null;
 
-  socket.send(msg);
+    if (ws.partner) {
+      ws.partner.send(JSON.stringify({ type: "status", message: "El otro usuario se desconectó." }));
+      ws.partner.partner = null;
+    }
+  });
+});
 
-  const p = document.createElement("p");
-  p.textContent = "Tú: " + msg;
-  chatBox.appendChild(p);
+setInterval(() => {
+  wss.clients.forEach((ws) => {
+    if (ws.readyState === ws.OPEN) ws.ping();
+  });
+}, 20000);
 
-  messageInput.value = "";
-};
+server.listen(PORT, () => {
+  console.log(`Servidor activo en puerto ${PORT}`);
+});
