@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
 
-    <!-- ETIQUETA DE SEARCH CONSOLE -->
+    <!-- VERIFICACIÓN DE GOOGLE -->
     <meta name="google-site-verification" content="Tv17bWhX0JE59lWgAMOcgnG4iPG2GJ__QFh4DNoHIf0" />
 
-    <title>Omegle x</title>
+    <title>Mini Omegle</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -14,28 +14,27 @@
 
     <h1>Mini Omegle</h1>
 
-    <div class="videos">
-        <div>
-            <h3>Tú</h3>
-            <video id="localVideo" autoplay playsinline></video>
-        </div>
-
-        <div>
-            <h3>Extraño</h3>
-            <video id="remoteVideo" autoplay playsinline></video>
-        </div>
+    <!-- SOLO VIDEO DEL EXTRAÑO -->
+    <div class="video-container">
+        <h3>Extraño</h3>
+        <video id="remoteVideo" autoplay playsinline></video>
     </div>
 
+    <!-- CONTROLES -->
     <div class="controls">
         <button id="connectBtn">Conectar</button>
         <button id="nextBtn" disabled>Siguiente</button>
         <button id="leaveBtn" disabled>Salir</button>
     </div>
 
+    <!-- CHAT -->
     <div class="chat-area">
         <div id="messages"></div>
-        <input id="messageInput" type="text" placeholder="Escribe un mensaje..." />
-        <button id="sendBtn">Enviar</button>
+
+        <div class="chat-input">
+            <input type="text" id="messageInput" placeholder="Escribe un mensaje...">
+            <button id="sendBtn">Enviar</button>
+        </div>
     </div>
 
     <script src="script.js"></script>
