@@ -1,206 +1,26 @@
-/* ================================
-   ESTILOS GENERALES
-================================== */
-
-body {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-    background: #0f0f0f;
-    color: white;
-    display: flex;
-    justify-content: center;
-    min-height: 100vh;
+/* CONTENEDOR PRINCIPAL DEL VIDEO */
+.video-container {
+    width: 90%;
+    max-width: 900px; /* lo agranda bastante */
+    margin: 20px auto;
+    background: #111;
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.4);
 }
 
-.main-container {
-    width: 95%;
-    max-width: 900px;
-    margin-top: 20px;
-    position: relative;
-}
-
-.title {
+/* TÍTULO “EXTRAÑO” */
+.video-container h3 {
+    margin-bottom: 10px;
     text-align: center;
-    font-size: 32px;
-    margin-bottom: 15px;
-    letter-spacing: 1px;
-    font-weight: bold;
-    color: #4da6ff;
+    font-size: 22px;
 }
 
-/* ================================
-   VIDEO
-================================== */
-
-.video-box {
-    background: #1b1b1b;
-    padding: 10px;
-    border-radius: 10px;
-    display: flex;
-    justify-content: center;
-    margin-bottom: 15px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.7);
-}
-
+/* VIDEO REMOTO */
 #remoteVideo {
     width: 100%;
-    max-height: 350px;
-    background: black;
+    height: 500px;   /* <-- AQUI LO AGRANDÉ */
+    background: #000;
     border-radius: 10px;
-}
-
-/* ================================
-   BOTONES
-================================== */
-
-.controls {
-    display: flex;
-    justify-content: center;
-    gap: 12px;
-    margin-bottom: 15px;
-}
-
-.btn {
-    padding: 10px 20px;
-    border-radius: 10px;
-    cursor: pointer;
-    border: none;
-    font-size: 15px;
-    font-weight: bold;
-    transition: 0.2s;
-}
-
-.btn:disabled {
-    background: #444;
-    color: #999;
-    cursor: not-allowed;
-}
-
-.primary {
-    background: #4da6ff;
-    color: white;
-}
-
-.primary:hover {
-    background: #70b6ff;
-}
-
-.warning {
-    background: #ffa500;
-    color: black;
-}
-
-.warning:hover {
-    background: #ffbb40;
-}
-
-.danger {
-    background: #ff4d4d;
-    color: white;
-}
-
-.danger:hover {
-    background: #ff6666;
-}
-
-.send {
-    background: #4da6ff;
-}
-
-.send:hover {
-    background: #6cb7ff;
-}
-
-/* ================================
-   CHAT
-================================== */
-
-.chat-area {
-    background: #1b1b1b;
-    padding: 10px;
-    border-radius: 10px;
-    height: 320px;
-    display: flex;
-    flex-direction: column;
-    box-shadow: 0 0 10px rgba(0,0,0,0.7);
-}
-
-.messages {
-    flex: 1;
-    overflow-y: auto;
-    padding-right: 5px;
-}
-
-.messages::-webkit-scrollbar {
-    width: 6px;
-}
-
-.messages::-webkit-scrollbar-thumb {
-    background: #555;
-    border-radius: 5px;
-}
-
-.message {
-    padding: 8px 12px;
-    margin: 6px 0;
-    border-radius: 10px;
-    max-width: 75%;
-    font-size: 14px;
-}
-
-.me {
-    background: #4da6ff;
-    align-self: flex-end;
-    color: black;
-}
-
-.other {
-    background: #333;
-    align-self: flex-start;
-    color: white;
-}
-
-/* ================================
-   INPUT DEL CHAT
-================================== */
-
-.chat-input {
-    display: flex;
-    margin-top: 10px;
-    gap: 8px;
-}
-
-.chat-input input {
-    flex: 1;
-    padding: 10px;
-    border-radius: 10px;
-    border: none;
-    background: #222;
-    color: white;
-}
-
-.chat-input input::placeholder {
-    color: #888;
-}
-
-/* ================================
-   BOTÓN MODO OSCURO
-================================== */
-
-.dark-toggle {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: #222;
-    border: none;
-    padding: 8px;
-    border-radius: 50%;
-    color: white;
-    cursor: pointer;
-    font-size: 18px;
-}
-
-.dark-toggle:hover {
-    background: #333;
+    object-fit: cover;  /* llena todo bonito */
 }
