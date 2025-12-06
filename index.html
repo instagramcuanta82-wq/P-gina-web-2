@@ -1,50 +1,52 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Omega X</title>
 
-    <!-- VERIFICACIÓN DE GOOGLE -->
-    <meta name="google-site-verification" content="Tv17bWhX0JE59lWgAMOcgnG4iPG2GJ__QFh4DNoHIf0" />
+  <!-- (Si querés) etiqueta de verificación de Google ya la tenés en tu index si hace falta -->
+  <!-- <meta name="google-site-verification" content="Tv17bWhX0JE59lWgAMOcgnG4iPG2GJ__QFh4DNoHIf0" /> -->
 
-    <title>Omega X</title>
-
-    <!-- ESTILOS MODERNOS -->
-    <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
+  <header class="topbar">
+    <h1>Omega X</h1>
+    <button id="themeToggle" class="theme-btn" title="Cambiar tema">🌙</button>
+  </header>
 
-    <div class="main-container">
+  <main class="container">
+    <!-- VIDEO GRANDE (solo remoto) -->
+    <section class="video-area">
+      <div class="video-wrapper">
+        <video id="remoteVideo" autoplay playsinline></video>
+        <div id="overlayStatus" class="overlay">Desconectado</div>
+      </div>
+    </section>
 
-        <h1 class="title">Omega X</h1>
+    <!-- CONTROLES -->
+    <section class="controls">
+      <button id="connectBtn" class="btn primary">Conectar</button>
+      <button id="nextBtn" class="btn" disabled>Siguiente</button>
+      <button id="leaveBtn" class="btn danger" disabled>Salir</button>
+    </section>
 
-        <!-- SOLO VIDEO DEL EXTRAÑO -->
-        <div class="video-box">
-            <video id="remoteVideo" autoplay playsinline></video>
-        </div>
+    <!-- CHAT -->
+    <section class="chat">
+      <div id="messages" class="messages"></div>
 
-        <!-- CONTROLES -->
-        <div class="controls">
-            <button id="connectBtn" class="btn primary">Conectar</button>
-            <button id="nextBtn" class="btn warning" disabled>Siguiente</button>
-            <button id="leaveBtn" class="btn danger" disabled>Salir</button>
-        </div>
+      <div class="input-row">
+        <input id="messageInput" type="text" placeholder="Escribe un mensaje..." />
+        <button id="sendBtn" class="btn small">Enviar</button>
+      </div>
+    </section>
 
-        <!-- CHAT -->
-        <div class="chat-area">
-            <div id="messages" class="messages"></div>
+    <footer class="footer">
+      <small>Servidor: <span id="serverUrl">wss://omegle-server-5i11.onrender.com</span></small>
+    </footer>
+  </main>
 
-            <div class="chat-input">
-                <input type="text" id="messageInput" placeholder="Escribe un mensaje...">
-                <button id="sendBtn" class="btn send">Enviar</button>
-            </div>
-        </div>
-
-        <!-- MODO OSCURO -->
-        <button id="darkModeBtn" class="dark-toggle">🌙</button>
-
-    </div>
-
-    <script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
