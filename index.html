@@ -6,35 +6,43 @@
     <!-- VERIFICACIÓN DE GOOGLE -->
     <meta name="google-site-verification" content="Tv17bWhX0JE59lWgAMOcgnG4iPG2GJ__QFh4DNoHIf0" />
 
-    <title>Mini Omegle</title>
+    <title>Omega X</title>
+
+    <!-- ESTILOS MODERNOS -->
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <h1>Mini Omegle</h1>
+    <div class="main-container">
 
-    <!-- SOLO VIDEO DEL EXTRAÑO -->
-    <div class="video-container">
-        <h3>Extraño</h3>
-        <video id="remoteVideo" autoplay playsinline></video>
-    </div>
+        <h1 class="title">Omega X</h1>
 
-    <!-- CONTROLES -->
-    <div class="controls">
-        <button id="connectBtn">Conectar</button>
-        <button id="nextBtn" disabled>Siguiente</button>
-        <button id="leaveBtn" disabled>Salir</button>
-    </div>
-
-    <!-- CHAT -->
-    <div class="chat-area">
-        <div id="messages"></div>
-
-        <div class="chat-input">
-            <input type="text" id="messageInput" placeholder="Escribe un mensaje...">
-            <button id="sendBtn">Enviar</button>
+        <!-- SOLO VIDEO DEL EXTRAÑO -->
+        <div class="video-box">
+            <video id="remoteVideo" autoplay playsinline></video>
         </div>
+
+        <!-- CONTROLES -->
+        <div class="controls">
+            <button id="connectBtn" class="btn primary">Conectar</button>
+            <button id="nextBtn" class="btn warning" disabled>Siguiente</button>
+            <button id="leaveBtn" class="btn danger" disabled>Salir</button>
+        </div>
+
+        <!-- CHAT -->
+        <div class="chat-area">
+            <div id="messages" class="messages"></div>
+
+            <div class="chat-input">
+                <input type="text" id="messageInput" placeholder="Escribe un mensaje...">
+                <button id="sendBtn" class="btn send">Enviar</button>
+            </div>
+        </div>
+
+        <!-- MODO OSCURO -->
+        <button id="darkModeBtn" class="dark-toggle">🌙</button>
+
     </div>
 
     <script src="script.js"></script>
