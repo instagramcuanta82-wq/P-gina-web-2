@@ -2,9 +2,14 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+
+    <!-- ETIQUETA DE SEARCH CONSOLE -->
+    <meta name="google-site-verification" content="Tv17bWhX0JE59lWgAMOcgnG4iPG2GJ__QFh4DNoHIf0" />
+
     <title>Omegle x</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
     <h1>Mini Omegle</h1>
@@ -29,18 +34,10 @@
 
     <div class="chat-area">
         <div id="messages"></div>
-
-        <div class="input-area">
-            <input id="messageInput" placeholder="Escribe un mensaje...">
-            <button id="sendBtn">Enviar</button>
-        </div>
+        <input id="messageInput" type="text" placeholder="Escribe un mensaje..." />
+        <button id="sendBtn">Enviar</button>
     </div>
 
-    <p class="server-info">
-        Servidor de señalización: wss://omegle-f80m.onrender.com
-    </p>
-
     <script src="script.js"></script>
-
 </body>
 </html>
