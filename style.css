@@ -1,26 +1,65 @@
-/* CONTENEDOR PRINCIPAL DEL VIDEO */
-.video-container {
-    width: 90%;
-    max-width: 900px; /* lo agranda bastante */
-    margin: 20px auto;
-    background: #111;
-    padding: 15px;
-    border-radius: 12px;
-    box-shadow: 0 0 15px rgba(0,0,0,0.4);
+:root{
+  --bg: #0f1113;
+  --panel: #151718;
+  --muted: #8b8f93;
+  --accent: #2ea7ff;
+  --danger: #ff6b6b;
+  --glass: rgba(255,255,255,0.03);
+  --radius: 12px;
+  --gap: 16px;
+  color-scheme: dark;
+  font-family: Inter, system-ui, Arial, sans-serif;
 }
 
-/* TÍTULO “EXTRAÑO” */
-.video-container h3 {
-    margin-bottom: 10px;
-    text-align: center;
-    font-size: 22px;
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;background:var(--bg);color:#e6e7e8}
+header{display:flex;align-items:center;justify-content:center;gap:12px;padding:18px 12px}
+#site-title{margin:0;color:var(--accent)}
+#themeToggle{background:none;border:0;color:#fff;font-size:18px;cursor:pointer}
+
+.main-container{max-width:1000px;margin:0 auto;padding:12px}
+
+/* VIDEO */
+.video-section{display:flex;justify-content:center;margin-bottom:18px}
+.video-wrapper{width:100%;max-width:920px;background:var(--panel);padding:14px;border-radius:16px;box-shadow:0 6px 20px rgba(0,0,0,0.6)}
+.video-wrapper .label{margin:0;color:var(--muted);text-align:left;font-weight:600;padding-left:6px}
+#remoteVideo{
+  width:100%;
+  height:calc(100vw * 0.45);
+  max-height:620px;
+  background:#000;
+  border-radius:10px;
+  object-fit:cover;
+  display:block;
+  margin-top:10px;
+  border:2px solid rgba(255,255,255,0.03);
 }
 
-/* VIDEO REMOTO */
-#remoteVideo {
-    width: 100%;
-    height: 500px;   /* <-- AQUI LO AGRANDÉ */
-    background: #000;
-    border-radius: 10px;
-    object-fit: cover;  /* llena todo bonito */
+/* CONTROLES */
+.controls{display:flex;gap:12px;justify-content:center;margin:12px 0}
+.btn{
+  padding:10px 16px;border-radius:10px;border:0;cursor:pointer;background:var(--glass);color:#dfe3e6;font-weight:600;box-shadow:inset 0 -2px rgba(0,0,0,0.3);
+}
+.btn.primary{background:linear-gradient(180deg,var(--accent),#1a88d6);color:#fff}
+.btn.danger{background:linear-gradient(180deg,var(--danger),#d94b4b);color:#fff}
+.btn.small{padding:8px 12px}
+
+/* CHAT */
+.chat-section{max-width:920px;margin:0 auto;margin-top:10px}
+.messages{
+  min-height:140px;max-height:240px;overflow:auto;background:#121314;border-radius:10px;padding:10px;border:1px solid rgba(255,255,255,0.02)
+}
+.messages .msg{background:#1b1c1d;padding:8px 10px;border-radius:8px;margin-bottom:8px;color:#d8d8d8;}
+.chat-input{display:flex;gap:8px;margin-top:8px}
+.chat-input input{flex:1;padding:12px;border-radius:10px;border:0;background:#151617;color:#fff}
+.chat-input button{border-radius:10px;border:0;padding:10px 14px;background:var(--accent);color:#fff}
+
+/* FOOTER */
+.footer{max-width:920px;margin:18px auto;color:var(--muted);text-align:center}
+
+/* Responsive */
+@media (max-width:600px){
+  #remoteVideo{height:220px}
+  .controls{flex-direction:row;gap:8px;padding:0 8px}
+  .video-wrapper{padding:10px}
 }
