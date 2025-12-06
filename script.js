@@ -1,6 +1,6 @@
 // ------------------------------------------------------------
 // CONFIG ------------------------------------------------------
-const WS_URL = 'wss://omega-x-2.onrender.com'; // tu servidor WebSocket
+const WS_URL = 'wss://omega-x-3.onrender.com'; // tu servidor WebSocket
 const STUN_SERVERS = [{urls: 'stun:stun.l.google.com:19302'}];
 
 // ------------------------------------------------------------
