@@ -268,5 +268,13 @@ window.addEventListener("beforeunload", () => {
     if (ws && ws.readyState === WebSocket.OPEN) ws.close();
   } catch (e) {}
 });
-
+// Cerrar cámara y conexión cuando se cierra la página
+window.addEventListener("beforeunload", () => {
+    if (localStream) {
+        localStream.getTracks().forEach(track => track.stop());
+    }
+    if (peerConnection) {
+        peerConnection.close();
+    }
+});
 // --------- FIN del script ----------
