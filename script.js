@@ -1,51 +1,109 @@
-let ws = null;
+const serverUrl = "wss://omegle-f80m.onrender.com";
 
-function connect() {
-    ws = new WebSocket("wss://omegle-f80m.onrender.com");
+let ws;
+let pc;
+let localStream;
 
-    ws.onopen = () => {
-        addMessage("🟢 Conectado. Buscando un desconocido...");
-        ws.send(JSON.stringify({ type: "find" }));
+// HTML
+const localVideo = document.getElementById("localVideo");
+const remoteVideo = document.getElementById("remoteVideo");
+const connectBtn = document.getElementById("connectBtn");
+const nextBtn = document.getElementById("nextBtn");
+const leaveBtn = document.getElementById("leaveBtn");
+const messages = document.getElementById("messages");
+const messageInput = document.getElementById("messageInput");
+const sendBtn = document.getElementById("sendBtn");
+
+connectBtn.onclick = startConnection;
+nextBtn.onclick = findNext;
+leaveBtn.onclick = leaveChat;
+sendBtn.onclick = sendMessage;
+
+async function startConnection() {
+    connectBtn.disabled = true;
+
+    ws = new WebSocket(serverUrl);
+    ws.onmessage = onMessage;
+    
+    localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+    localVideo.srcObject = localStream;
+}
+
+function createPeer() {
+    pc = new RTCPeerConnection();
+
+    localStream.getTracks().forEach(t => pc.addTrack(t, localStream));
+
+    pc.ontrack = e => {
+        remoteVideo.srcObject = e.streams[0];
     };
 
-    ws.onmessage = (msg) => {
-        let data = JSON.parse(msg.data);
-
-        if (data.type === "matched") {
-            addMessage("🔵 Conectado con un desconocido.");
-        }
-
-        if (data.type === "message") {
-            addMessage("Desconocido: " + data.text);
-        }
-
-        if (data.type === "end") {
-            addMessage("❌ El desconocido se desconectó.");
+    pc.onicecandidate = e => {
+        if (e.candidate) {
+            ws.send(JSON.stringify({ type: "candidate", candidate: e.candidate }));
         }
     };
 }
 
-function addMessage(text) {
-    let box = document.getElementById("chat-box");
-    let div = document.createElement("div");
-    div.textContent = text;
-    box.appendChild(div);
-    box.scrollTop = box.scrollHeight;
-}
+async function onMessage(msg) {
+    let data = JSON.parse(msg.data);
 
-document.getElementById("send-btn").onclick = () => {
-    let input = document.getElementById("message-input");
-    let text = input.value.trim();
+    if (data.type === "match") {
+        nextBtn.disabled = false;
+        leaveBtn.disabled = false;
 
-    if (text !== "" && ws) {
-        ws.send(JSON.stringify({ type: "message", text }));
-        addMessage("Tú: " + text);
-        input.value = "";
+        createPeer();
+
+        if (data.offer) {
+            await pc.setRemoteDescription(data.offer);
+            let answer = await pc.createAnswer();
+            await pc.setLocalDescription(answer);
+
+            ws.send(JSON.stringify({ type: "answer", answer }));
+        }
+        return;
     }
-};
 
-document.getElementById("next-btn").onclick = () => {
+    if (data.type === "answer") {
+        pc.setRemoteDescription(data.answer);
+        return;
+    }
+
+    if (data.type === "candidate") {
+        pc.addIceCandidate(data.candidate);
+    }
+
+    if (data.type === "offer") {
+        await pc.setRemoteDescription(data.offer);
+        let answer = await pc.createAnswer();
+        await pc.setLocalDescription(answer);
+
+        ws.send(JSON.stringify({ type: "answer", answer }));
+    }
+
+    if (data.type === "message") {
+        addMsg("Extraño", data.text);
+    }
+}
+
+function findNext() {
+    ws.send(JSON.stringify({ type: "next" }));
+}
+
+function leaveChat() {
+    ws.send(JSON.stringify({ type: "leave" }));
     location.reload();
-};
+}
 
-connect();
+function sendMessage() {
+    let text = messageInput.value;
+    messageInput.value = "";
+
+    addMsg("Tú", text);
+
+    ws.send(JSON.stringify({ type: "message", text }));
+}
+
+function addMsg(user, text) {
+    messages.innerHTML += `<p><b>${user}:</b> ${text}</p>`;
+}
